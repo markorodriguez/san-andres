@@ -107,7 +107,8 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import Landing from "./demos/RestaurantLandingPage"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import Reserva from "demos/custom/Reserva"
+import Resultado from "demos/custom/Resultado"
 export default function App() {
   // If you want to disable the animation just use the disabled `prop` like below on your page's component
   // return <AnimationRevealPage disabled>xxxxxxxxxx</AnimationRevealPage>;
@@ -116,8 +117,14 @@ export default function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/">
+        <Route exact path="/">
           <Landing />
+        </Route>
+        <Route path="/reserva" >
+          <Reserva />
+        </Route>
+        <Route path="/resultados" >
+          <Resultado/>
         </Route>
       </Switch>
     </Router>

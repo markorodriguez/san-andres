@@ -15,3 +15,12 @@
     transform: scale(0);
     /* transform: translateY(-150%); */
 }
+
+/*custom styles*/
+
+.select , .option{
+    font-family: Inter,system-ui;
+    color: black;
+    letter-spacing: 0.025rem;
+    font-weight: 500;
+}

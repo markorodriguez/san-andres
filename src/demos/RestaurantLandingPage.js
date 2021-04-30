@@ -30,7 +30,7 @@ export default () => {
         imageCss={imageCss}
         imageDecoratorBlob={true}
         primaryButtonText="Reserva tu cita"
-        
+        primaryButtonUrl="/reserva"
       />
       <MainFeature
         subheading={<Subheading>Brindando el mejor servicio desde 2015</Subheading>}
@@ -126,7 +126,7 @@ export default () => {
             value: "1500+"
           }
         ]}
-        primaryButtonText="Order Now"
+        primaryButtonText="Reserva ahora"
         primaryButtonUrl="https://order.now.com"
         imageInsideDiv={false}
         imageSrc="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzI2fQ&auto=format&fit=crop&w=768&q=80"
