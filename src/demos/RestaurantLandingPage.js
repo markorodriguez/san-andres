@@ -6,9 +6,9 @@ import Hero from "components/hero/TwoColumnWithVideo.js";
 import Features from "components/features/ThreeColSimple.js";
 import MainFeature from "components/features/TwoColWithButton.js";
 import MainFeature2 from "components/features/TwoColSingleFeatureWithStats2.js";
-import TabGrid from "components/cards/TabCardGrid.js";
+//import TabGrid from "components/cards/TabCardGrid.js";
 import Testimonial from "components/testimonials/ThreeColumnWithProfileImage.js";
-import DownloadApp from "components/cta/DownloadApp.js";
+//import DownloadApp from "components/cta/DownloadApp.js";
 import Footer from "components/footers/FiveColumnWithInputForm.js";
 
 import chefIconImageSrc from "images/chef-icon.svg";
@@ -18,7 +18,7 @@ import shopIconImageSrc from "images/shop-icon.svg";
 export default () => {
   const Subheading = tw.span`tracking-wider text-sm font-medium`;
   const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
-  const HighlightedTextInverse = tw.span`bg-gray-100 text-primary-500 px-4 transform -skew-x-12 inline-block`;
+  //const HighlightedTextInverse = tw.span`bg-gray-100 text-primary-500 px-4 transform -skew-x-12 inline-block`;
   const Description = tw.span`inline-block mt-8`;
   const imageCss = tw`rounded-4xl`;
   return (
@@ -33,11 +33,11 @@ export default () => {
         
       />
       <MainFeature
-        subheading={<Subheading>Established Since 2014</Subheading>}
+        subheading={<Subheading>Brindando el mejor servicio desde 2015</Subheading>}
         heading={
           <>
-            We've been serving for
-            <wbr /> <HighlightedText>over 5 years.</HighlightedText>
+            Funcionando hace 
+            <wbr /> <HighlightedText>más de 5 años.</HighlightedText>
           </>
         }
         description={
@@ -53,24 +53,18 @@ export default () => {
         textOnLeft={false}
         primaryButtonText="Latest Offers"
         imageSrc={
-          "https://images.unsplash.com/photo-1460306855393-0410f61241c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
+          "https://images.pexels.com/photos/127873/pexels-photo-127873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
         }
         imageCss={imageCss}
         imageDecoratorBlob={true}
         imageDecoratorBlobCss={tw`left-1/2 -translate-x-1/2 md:w-32 md:h-32 opacity-25`}
       />
       {/* TabGrid Component also accepts a tabs prop to customize the tabs and its content directly. Please open the TabGrid component file to see the structure of the tabs props.*/}
-      <TabGrid
-        heading={
-          <>
-            Checkout our <HighlightedText>menu.</HighlightedText>
-          </>
-        }
-      />
+
       <Features
         heading={
           <>
-            Amazing <HighlightedText>Services.</HighlightedText>
+            Servicios que <HighlightedText>brindamos.</HighlightedText>
           </>
         }
         cards={[
@@ -78,19 +72,37 @@ export default () => {
             imageSrc: shopIconImageSrc,
             title: "230+ Locations",
             description: "Lorem ipsum donor amet siti ceali placeholder text",
-            url: "https://google.com"
+            
           },
           {
             imageSrc: chefIconImageSrc,
             title: "Professional Chefs",
             description: "Lorem ipsum donor amet siti ceali placeholder text",
-            url: "https://timerse.com"
+            
           },
           {
             imageSrc: celebrationIconImageSrc,
             title: "Birthday Catering",
             description: "Lorem ipsum donor amet siti ceali placeholder text",
-            url: "https://reddit.com"
+           
+          },
+          {
+            imageSrc: shopIconImageSrc,
+            title: "230+ Locations",
+            description: "Lorem ipsum donor amet siti ceali placeholder text",
+            
+          },
+          {
+            imageSrc: chefIconImageSrc,
+            title: "Professional Chefs",
+            description: "Lorem ipsum donor amet siti ceali placeholder text",
+            
+          },
+          {
+            imageSrc: celebrationIconImageSrc,
+            title: "Birthday Catering",
+            description: "Lorem ipsum donor amet siti ceali placeholder text",
+           
           }
         ]}
 
@@ -98,8 +110,8 @@ export default () => {
         imageCss={tw`w-20! h-20!`}
       />
       <MainFeature2
-        subheading={<Subheading>A Reputed Brand</Subheading>}
-        heading={<>Why <HighlightedText>Choose Us ?</HighlightedText></>}
+        subheading={<Subheading>Una clínica con reputación</Subheading>}
+        heading={<>¿Por qué <HighlightedText>elegirnos?</HighlightedText></>}
         statistics={[
           {
             key: "Orders",
@@ -126,10 +138,7 @@ export default () => {
       />
       <Testimonial
         subheading=""
-        heading={<>Customers <HighlightedText>Love Us.</HighlightedText></>}
-      />
-      <DownloadApp
-        text={<>People around you are ordering delicious meals using the <HighlightedTextInverse>Treact App.</HighlightedTextInverse></>}
+        heading={<>Nuestros clientes nos <HighlightedText>recomiendan.</HighlightedText></>}
       />
       <Footer />
     </AnimationRevealPage>
