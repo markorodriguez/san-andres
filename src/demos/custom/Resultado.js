@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
+import Axios from "axios"
 
 import AnimationRevealPage from "helpers/AnimationRevealPage";
 import Navbar from "components/headers/light";
@@ -41,7 +42,22 @@ const SvgDotPattern1 = tw(
     SvgDotPatternIcon
 )`absolute bottom-0 right-0 transform translate-y-1/2 translate-x-1/2 -z-10 opacity-50 text-primary-500 fill-current w-24`;
 
+
 export default () => {
+
+    
+const [dni, setDni] = useState()
+const [digito, setDigito] = useState()
+
+const handleForm = (e) => {
+    e.preventDefault()
+
+    const data = {
+        dni: dni,
+        digito: digito
+    }
+    Axios.post('http://localhost:2000/test', data)
+}
     return (
         <AnimationRevealPage>
             <Navbar />
@@ -60,6 +76,9 @@ export default () => {
                                                 type="text"
                                                 name="name"
                                                 placeholder="Ingrese su DNI"
+                                                value={dni}
+                                                onChange={(e)=>{setDni(e.target.value)}}
+                                                maxLength='8'
                                             />
                                         </InputContainer>
                                         <InputContainer>
@@ -71,12 +90,15 @@ export default () => {
                                                 type="email"
                                                 name="email"
                                                 placeholder="Ingrese el caracter"
+                                                maxLength='1'
+                                                value={digito}
+                                                onChange={(e)=>{setDigito(e.target.value)}}
                                             />
                                         </InputContainer>
                                     </Column>
                                 </TwoColumn>
 
-                                <SubmitButton type="submit" value="Submit">
+                                <SubmitButton type="submit" value="Submit" onClick={handleForm}>
                                     Enviar
                                  </SubmitButton>
                             </form>

@@ -1,7 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components";
 import tw from "twin.macro";
-
+import Axios from "axios"
 import AnimationRevealPage from "helpers/AnimationRevealPage"
 import Navbar from "components/headers/light"
 import Footer from "components/footers/FiveColumnWithInputForm"
@@ -9,6 +9,8 @@ import { ReactComponent as SvgDotPatternIcon } from "../../images/dot-pattern.sv
 
 const Container = tw.div`relative`;
 const Content = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
+
+
 
 const FormContainer = styled.div`
   ${tw`p-10 sm:p-12 md:p-16 bg-primary-500 text-gray-100 rounded-lg relative`}
@@ -40,7 +42,27 @@ const SubmitButton = tw.button`w-full sm:w-32 mt-6 py-3 bg-gray-100 text-primary
 const SvgDotPattern1 = tw(SvgDotPatternIcon)`absolute bottom-0 right-0 transform translate-y-1/2 translate-x-1/2 -z-10 opacity-50 text-primary-500 fill-current w-24`
 
 
+
 export default () => {
+
+    const [dni, setDni] = useState()
+    const [digito, setDigito] = useState()
+    const [especialidad, setEspecialidad] = useState()
+    const [horario, setHorario] = useState()
+    const [fecha, setFecha] = useState()
+
+    const handleForm = (e) => {
+        e.preventDefault();
+
+        const data = {
+            dni: dni,
+            digito: digito,
+            especialidad: especialidad,
+            horario: horario,
+            fecha: fecha
+        }
+        Axios.post('http://localhost:2000/test', data)
+    }
 
     return (
         <AnimationRevealPage>
@@ -55,39 +77,39 @@ export default () => {
                                     <Column>
                                         <InputContainer>
                                             <Label htmlFor="name-input">DNI</Label>
-                                            <Input id="name-input" type="text" name="name" placeholder="Ingrese su DNI" />
+                                            <Input id="name-input" type="text" name="name" placeholder="Ingrese su DNI" value={dni} onChange={(e) => { setDni(e.target.value) }} />
                                         </InputContainer>
                                         <InputContainer>
                                             <Label htmlFor="email-input">CARACTER DE VALIDACIÓN</Label>
-                                            <Input id="email-input" type="email" name="email" placeholder="Ingrese el caracter" />
+                                            <Input id="email-input" type="email" name="email" placeholder="Ingrese el caracter" maxLength='1' value={digito} onChange={(e) => { setDigito(e.target.value) }} />
                                         </InputContainer>
                                     </Column>
                                     <Column>
                                         <InputContainer>
                                             <Label htmlFor="name-input">ESPECIALIDAD</Label>
-                                            <Select className="select" style={{ width: '100%', color: 'rgba(160,174,192,1)', background: 'transparent', borderBottom: '2px solid #e5e7eb', paddingTop: '0.5rem', paddingBottom: '0.5rem' }} >
-                                                <Option className="option">Descarte COVID-19</Option>
-                                                <Option className="option">Nutrición</Option>
-                                                <Option className="option">Obstetricia</Option>
-                                                <Option className="option">Aea</Option>
-                                                <Option className="option">Aea</Option>
-                                                <Option className="option">Aea</Option>
-                                                <Option className="option">Aea</Option>
-                                                <Option className="option">Aea</Option>
+                                            <Select className="select" value={especialidad}  onChange={(e)=>{setEspecialidad(e.target.value)}} style={{ width: '100%', color: 'rgba(160,174,192,1)', background: 'transparent', borderBottom: '2px solid #e5e7eb', paddingTop: '0.5rem', paddingBottom: '0.5rem' }} >
+                                                <Option value='descarte' className="option">Descarte COVID-19</Option>
+                                                <Option className="option" value='nutricion' >Nutrición</Option>
+                                                <Option className="option" value='obstetricia'>Obstetricia</Option>
+                                                <Option className="option" value='nutricion2'>Aea</Option>
+                                                <Option className="option" value='nutricion3'>Aea</Option>
+                                                <Option className="option" value='nutricion4'>Aea</Option>
+                                                <Option className="option" value='nutricion5'>Aea</Option>
+                                                <Option className="option" value='nutricion6'>Aea</Option>
                                             </Select>
                                         </InputContainer>
                                         <InputContainer>
                                             <Label htmlFor="email-a">HORARIO DE PREFERENCIA</Label>
-                                            <Input id="email-a" type="time" name="email"  />
+                                            <Input id="email-a" type="time" name="email" value={horario} onChange={(e)=>{setHorario(e.target.value)}} />
                                         </InputContainer>
 
                                     </Column>
                                 </TwoColumn>
                                 <InputContainer>
                                     <Label htmlFor="email-b">DÍA DE LA CONSULTA</Label>
-                                    <Input id="email-b" type="date" name="email" placeholder="Ingrese el caracter" />
+                                    <Input id="email-b" type="date" name="email" placeholder="Ingrese el caracter" value={fecha} onChange={(e)=>{setFecha(e.target.value)}} />
                                 </InputContainer>
-                                <SubmitButton type="submit" value="Submit">Enviar</SubmitButton>
+                                <SubmitButton type="submit" value="Submit" onClick={handleForm}>Enviar</SubmitButton>
                             </form>
                         </div>
                         <SvgDotPattern1 />
