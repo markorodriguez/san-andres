@@ -5,6 +5,7 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 //import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
 
 import LogoImage from "images/logo.svg";
+import img from "../../images/logocli.png"
 import { ReactComponent as FacebookIcon } from "images/facebook-icon.svg";
 import { ReactComponent as TwitterIcon } from "images/twitter-icon.svg";
 import { ReactComponent as YoutubeIcon } from "images/youtube-icon.svg";
@@ -52,7 +53,7 @@ export default () => {
       <Content>
         <ThreeColRow>
           <LogoContainer>
-            <LogoImg src={LogoImage} />
+            <LogoImg src={img} />
             <LogoText>Clínica San Andrés.</LogoText>
           </LogoContainer>
           <CopywrightNotice>&copy; 2021 Clínica San Andrés - Derechos Reservados</CopywrightNotice>

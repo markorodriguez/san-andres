@@ -56,7 +56,7 @@ const handleForm = (e) => {
         dni: dni,
         digito: digito
     }
-    Axios.post('http://localhost:2000/test', data)
+    Axios.post('https://backend-clinica2331.herokuapp.com/verresultados', data).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
 }
     return (
         <AnimationRevealPage>

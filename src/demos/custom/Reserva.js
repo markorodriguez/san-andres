@@ -45,23 +45,27 @@ const SvgDotPattern1 = tw(SvgDotPatternIcon)`absolute bottom-0 right-0 transform
 
 export default () => {
 
-    const [dni, setDni] = useState()
-    const [digito, setDigito] = useState()
-    const [especialidad, setEspecialidad] = useState()
-    const [horario, setHorario] = useState()
-    const [fecha, setFecha] = useState()
+    const [dni, setDni] = useState("")
+    const [digito, setDigito] = useState("")
+    const [especialidad, setEspecialidad] = useState("")
+    const [edad, setEdad] = useState("")
+    const [fecha, setFecha] = useState("")
+    const [telefono, setTelefono] = useState("")
 
     const handleForm = (e) => {
         e.preventDefault();
-
+        //76599026 reni
         const data = {
             dni: dni,
             digito: digito,
             especialidad: especialidad,
-            horario: horario,
-            fecha: fecha
+            edad: edad,
+            fecha: fecha,
+            telefono: telefono
         }
-        Axios.post('http://localhost:2000/test', data)
+        Axios.post('https://backend-clinica2331.herokuapp.com/registropacientes', data).then((r)=>{
+            console.log(r.data)
+        }).catch((err)=>{console.log(err)})
     }
 
     return (
@@ -83,32 +87,29 @@ export default () => {
                                             <Label htmlFor="email-input">CARACTER DE VALIDACIÓN</Label>
                                             <Input id="email-input" type="email" name="email" placeholder="Ingrese el caracter" maxLength='1' value={digito} onChange={(e) => { setDigito(e.target.value) }} />
                                         </InputContainer>
+                                        <InputContainer>
+                                            <Label htmlFor="email-input">TELÉFONO</Label>
+                                            <Input id="email-input" type="email" name="email" placeholder="Ingrese su teléfono" value={telefono} onChange={(e) => { setTelefono(e.target.value) }} />
+                                        </InputContainer>
                                     </Column>
                                     <Column>
                                         <InputContainer>
                                             <Label htmlFor="name-input">ESPECIALIDAD</Label>
                                             <Select className="select" value={especialidad}  onChange={(e)=>{setEspecialidad(e.target.value)}} style={{ width: '100%', color: 'rgba(160,174,192,1)', background: 'transparent', borderBottom: '2px solid #e5e7eb', paddingTop: '0.5rem', paddingBottom: '0.5rem' }} >
                                                 <Option value='descarte' className="option">Descarte COVID-19</Option>
-                                                <Option className="option" value='nutricion' >Nutrición</Option>
-                                                <Option className="option" value='obstetricia'>Obstetricia</Option>
-                                                <Option className="option" value='nutricion2'>Aea</Option>
-                                                <Option className="option" value='nutricion3'>Aea</Option>
-                                                <Option className="option" value='nutricion4'>Aea</Option>
-                                                <Option className="option" value='nutricion5'>Aea</Option>
-                                                <Option className="option" value='nutricion6'>Aea</Option>
                                             </Select>
                                         </InputContainer>
                                         <InputContainer>
-                                            <Label htmlFor="email-a">HORARIO DE PREFERENCIA</Label>
-                                            <Input id="email-a" type="time" name="email" value={horario} onChange={(e)=>{setHorario(e.target.value)}} />
+                                            <Label htmlFor="email-a">EDAD</Label>
+                                            <Input id="email-a" type="number" min="0" max="100" maxLength="2" name="email" value={edad} onChange={(e)=>{setEdad(e.target.value)}} />
                                         </InputContainer>
-
-                                    </Column>
-                                </TwoColumn>
-                                <InputContainer>
+                                        <InputContainer>
                                     <Label htmlFor="email-b">DÍA DE LA CONSULTA</Label>
                                     <Input id="email-b" type="date" name="email" placeholder="Ingrese el caracter" value={fecha} onChange={(e)=>{setFecha(e.target.value)}} />
                                 </InputContainer>
+                                    </Column>
+                                </TwoColumn>
+                               
                                 <SubmitButton type="submit" value="Submit" onClick={handleForm}>Enviar</SubmitButton>
                             </form>
                         </div>

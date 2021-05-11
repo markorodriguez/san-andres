@@ -14,6 +14,10 @@ import Footer from "components/footers/FiveColumnWithInputForm.js";
 import chefIconImageSrc from "images/chef-icon.svg";
 import celebrationIconImageSrc from "images/celebration-icon.svg";
 import shopIconImageSrc from "images/shop-icon.svg";
+import hospitalityIconImageSrc from "images/hospitality-icon.svg";
+import emergencyIconImageSrc from "images/emergency-icon.svg";
+import medicineIconImageSrc from "images/medicine-icon.svg";
+import clinicphotoSrc from "images/camas.jpg";
 
 export default () => {
   const Subheading = tw.span`tracking-wider text-sm font-medium`;
@@ -33,20 +37,19 @@ export default () => {
         primaryButtonUrl="/reserva"
       />
       <MainFeature
-        subheading={<Subheading>Brindando el mejor servicio desde 2015</Subheading>}
+        subheading={<Subheading>Brindando el mejor servicio desde 2010</Subheading>}
         heading={
           <>
             Funcionando hace 
-            <wbr /> <HighlightedText>más de 5 años.</HighlightedText>
+            <wbr /> <HighlightedText>más de 6 años.</HighlightedText>
           </>
         }
         description={
           <Description>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
+            Clínica San Andrés se compromete a cuidar la salud y brindar una buena atención a sus pacientes.  
             <br />
             <br />
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Mantenemos la integridad de nuestros doctores para brindar la confianza a nuestros pacientes.
           </Description>
         }
         buttonRounded={false}
@@ -69,39 +72,21 @@ export default () => {
         }
         cards={[
           {
-            imageSrc: shopIconImageSrc,
-            title: "230+ Locations",
-            description: "Lorem ipsum donor amet siti ceali placeholder text",
+            imageSrc: hospitalityIconImageSrc,
+            title: "Hospitalización",
+            description: "Contamos con doctores especializados para ",
             
           },
           {
-            imageSrc: chefIconImageSrc,
-            title: "Professional Chefs",
-            description: "Lorem ipsum donor amet siti ceali placeholder text",
+            imageSrc: emergencyIconImageSrc,
+            title: "Emergencia",
+            description: "Servicio de emergencia las 24 horas, con doctores preparados para cualquier problema.",
             
           },
           {
-            imageSrc: celebrationIconImageSrc,
-            title: "Birthday Catering",
-            description: "Lorem ipsum donor amet siti ceali placeholder text",
-           
-          },
-          {
-            imageSrc: shopIconImageSrc,
-            title: "230+ Locations",
-            description: "Lorem ipsum donor amet siti ceali placeholder text",
-            
-          },
-          {
-            imageSrc: chefIconImageSrc,
-            title: "Professional Chefs",
-            description: "Lorem ipsum donor amet siti ceali placeholder text",
-            
-          },
-          {
-            imageSrc: celebrationIconImageSrc,
-            title: "Birthday Catering",
-            description: "Lorem ipsum donor amet siti ceali placeholder text",
+            imageSrc: medicineIconImageSrc,
+            title: "Farmacia",
+            description: "Contamos con una basta cantidad de medicinas para nuestros pacientes.",
            
           }
         ]}
@@ -110,26 +95,26 @@ export default () => {
         imageCss={tw`w-20! h-20!`}
       />
       <MainFeature2
-        subheading={<Subheading>Una clínica con reputación</Subheading>}
+        subheading={<Subheading>Una clínica con amplia experiencia</Subheading>}
         heading={<>¿Por qué <HighlightedText>elegirnos?</HighlightedText></>}
         statistics={[
           {
-            key: "Orders",
-            value: "94000+",
+            key: "Doctores",
+            value: "A++",
           },
           {
-            key: "Customers",
-            value: "11000+"
+            key: "Amplia infraestructura",
+            value: "A+"
           },
           {
-            key: "Chefs",
-            value: "1500+"
+            key: "Pacientes satisfechos",
+            value: "18500+"
           }
         ]}
         primaryButtonText="Reserva ahora"
         primaryButtonUrl="https://order.now.com"
         imageInsideDiv={false}
-        imageSrc="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzI2fQ&auto=format&fit=crop&w=768&q=80"
+        imageSrc = {clinicphotoSrc}
         imageCss={Object.assign(tw`bg-cover`, imageCss)}
         imageContainerCss={tw`md:w-1/2 h-auto`}
         imageDecoratorBlob={true}
