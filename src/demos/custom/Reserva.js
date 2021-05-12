@@ -6,7 +6,8 @@ import AnimationRevealPage from "helpers/AnimationRevealPage"
 import Navbar from "components/headers/light"
 import Footer from "components/footers/FiveColumnWithInputForm"
 import { ReactComponent as SvgDotPatternIcon } from "../../images/dot-pattern.svg"
-
+import {Modal, Button} from "react-bootstrap"
+ 
 const Container = tw.div`relative`;
 const Content = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
 
@@ -51,6 +52,7 @@ export default () => {
     const [edad, setEdad] = useState("")
     const [fecha, setFecha] = useState("")
     const [telefono, setTelefono] = useState("")
+    const [msj, setMessage] = useState("")
 
     const handleForm = (e) => {
         e.preventDefault();
@@ -64,12 +66,33 @@ export default () => {
             telefono: telefono
         }
         Axios.post('https://backend-clinica2331.herokuapp.com/registropacientes', data).then((r)=>{
+           setMessage(r.data)
             console.log(r.data)
+            handleShow()
         }).catch((err)=>{console.log(err)})
-    }
+        
+    }   
+
+    const [show, setShow] = useState(false)
+
+    const handleClose = () => {setShow(false)} 
+    const handleShow = () => {setShow(true)}
 
     return (
         <AnimationRevealPage>
+            <Modal show={show} onHide={handleClose}>
+  <Modal.Header closeButton>
+    <Modal.Title>!Atención!</Modal.Title>
+  </Modal.Header>
+
+  <Modal.Body>
+    <p>{msj}</p>
+  </Modal.Body>
+
+  <Modal.Footer>
+    <Button onClick={handleClose} variant="primary">Cerrar</Button>
+  </Modal.Footer>
+</Modal>
             <Navbar />
             <Container>
                 <Content>

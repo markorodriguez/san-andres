@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-import Axios from "axios"
-
+import Axios from "axios";
+import {Modal, Button} from "react-bootstrap"
 import AnimationRevealPage from "helpers/AnimationRevealPage";
 import Navbar from "components/headers/light";
 import Footer from "components/footers/FiveColumnWithInputForm";
@@ -39,75 +39,109 @@ const Input = tw.input``;
 const SubmitButton = tw.button`w-full sm:w-32 mt-6 py-3 bg-gray-100 text-primary-500 rounded-full font-bold tracking-wide shadow-lg uppercase text-sm transition duration-300 transform focus:outline-none focus:shadow-outline hover:bg-gray-300 hover:text-primary-700 hocus:-translate-y-px hocus:shadow-xl`;
 
 const SvgDotPattern1 = tw(
-    SvgDotPatternIcon
+  SvgDotPatternIcon
 )`absolute bottom-0 right-0 transform translate-y-1/2 translate-x-1/2 -z-10 opacity-50 text-primary-500 fill-current w-24`;
 
-
 export default () => {
+  const [dni, setDni] = useState();
+  const [digito, setDigito] = useState();
 
-    
-const [dni, setDni] = useState()
-const [digito, setDigito] = useState()
+  const [show, setShow] = useState(false);
 
-const handleForm = (e) => {
-    e.preventDefault()
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = () => {
+    setShow(true);
+  };
+  const [msj, setMessage] = useState("");
+
+  const handleForm = (e) => {
+    e.preventDefault();
 
     const data = {
-        dni: dni,
-        digito: digito
-    }
-    Axios.post('https://backend-clinica2331.herokuapp.com/verresultados', data).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})
-}
-    return (
-        <AnimationRevealPage>
-            <Navbar />
-            <Container>
-                <Content>
-                    <FormContainer>
-                        <div tw="mx-auto max-w-4xl">
-                            <h2>Vea sus resultados</h2>
-                            <form action="#">
-                                <TwoColumn>
-                                    <Column>
-                                        <InputContainer>
-                                            <Label htmlFor="name-input">DNI</Label>
-                                            <Input
-                                                id="name-input"
-                                                type="text"
-                                                name="name"
-                                                placeholder="Ingrese su DNI"
-                                                value={dni}
-                                                onChange={(e)=>{setDni(e.target.value)}}
-                                                maxLength='8'
-                                            />
-                                        </InputContainer>
-                                        <InputContainer>
-                                            <Label htmlFor="email-input">
-                                                CARACTER DE VALIDACIÓN
-                                            </Label>
-                                            <Input
-                                                id="email-input"
-                                                type="email"
-                                                name="email"
-                                                placeholder="Ingrese el caracter"
-                                                maxLength='1'
-                                                value={digito}
-                                                onChange={(e)=>{setDigito(e.target.value)}}
-                                            />
-                                        </InputContainer>
-                                    </Column>
-                                </TwoColumn>
+      dni: dni,
+      digito: digito,
+    };
+    Axios.post("https://backend-clinica2331.herokuapp.com/verresultados", data)
+      .then((res) => {
+        setMessage(res.data);
+        handleShow()
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  return (
+    <AnimationRevealPage>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>!Atención!</Modal.Title>
+        </Modal.Header>
 
-                                <SubmitButton type="submit" value="Submit" onClick={handleForm}>
-                                    Enviar
-                                 </SubmitButton>
-                            </form>
-                        </div>
-                        <SvgDotPattern1 />
-                    </FormContainer>
-                </Content>
-            </Container>
-            <Footer />
-        </AnimationRevealPage>
-    );
+        <Modal.Body>
+          <p>{msj}</p>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button onClick={handleClose} variant="primary">
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Navbar />
+      <Container>
+        <Content>
+          <FormContainer>
+            <div tw="mx-auto max-w-4xl">
+              <h2>Vea sus resultados</h2>
+              <form action="#">
+                <TwoColumn>
+                  <Column>
+                    <InputContainer>
+                      <Label htmlFor="name-input">DNI</Label>
+                      <Input
+                        id="name-input"
+                        type="text"
+                        name="name"
+                        placeholder="Ingrese su DNI"
+                        value={dni}
+                        onChange={(e) => {
+                          setDni(e.target.value);
+                        }}
+                        maxLength="8"
+                      />
+                    </InputContainer>
+                    <InputContainer>
+                      <Label htmlFor="email-input">
+                        CARACTER DE VALIDACIÓN
+                      </Label>
+                      <Input
+                        id="email-input"
+                        type="email"
+                        name="email"
+                        placeholder="Ingrese el caracter"
+                        maxLength="1"
+                        value={digito}
+                        onChange={(e) => {
+                          setDigito(e.target.value);
+                        }}
+                      />
+                    </InputContainer>
+                  </Column>
+                </TwoColumn>
+
+                <SubmitButton type="submit" value="Submit" onClick={handleForm}>
+                  Enviar
+                </SubmitButton>
+              </form>
+            </div>
+            <SvgDotPattern1 />
+          </FormContainer>
+        </Content>
+      </Container>
+      <Footer />
+    </AnimationRevealPage>
+  );
 };

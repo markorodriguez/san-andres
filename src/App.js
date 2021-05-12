@@ -109,6 +109,8 @@ import Landing from "./demos/RestaurantLandingPage"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Reserva from "demos/custom/Reserva"
 import Resultado from "demos/custom/Resultado"
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 export default function App() {
   // If you want to disable the animation just use the disabled `prop` like below on your page's component
   // return <AnimationRevealPage disabled>xxxxxxxxxx</AnimationRevealPage>;
