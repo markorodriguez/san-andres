@@ -65,7 +65,7 @@ export default () => {
             fecha: fecha,
             telefono: telefono
         }
-        Axios.post('http://localhost:2000/registropacientes', data).then((r)=>{
+        Axios.post('https://backend-clinica2331.herokuapp.com/registropacientes', data).then((r)=>{
             //console.log(data)
            setMessage(r.data)
             console.log(r.data)
