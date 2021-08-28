@@ -18,6 +18,12 @@
 
 /*custom styles*/
 
+
+
+a:-webkit-any-link{
+    text-decoration: none;
+}
+
 .select , .option{
     font-family: Inter,system-ui;
     color: black;
