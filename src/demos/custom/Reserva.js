@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components";
 import tw from "twin.macro";
 import Axios from "axios"
@@ -53,6 +53,27 @@ export default () => {
     const [fecha, setFecha] = useState("")
     const [telefono, setTelefono] = useState("")
     const [msj, setMessage] = useState("")
+    const [cantidad, setCantidad] = useState("")
+    const [fetchCantidad, setFetchedCantidad] = useState(false)
+
+    useEffect ( () => {
+        
+        const data = {
+            fecha: fecha
+        }
+
+       Axios.post("https://backend-clinica2331.herokuapp.com/citaspordia", data).then((res)=>{
+           console.log(res.data)
+           
+           if(res.data===""){
+               console.log("está vacío")
+           } else {
+            setMessage("La cantidad de citas disponibles para esta fecha es " + res.data.citas_disponibles)
+            handleShow()
+           }
+           
+       }).catch((err)=>console.log(err  ))
+    } , [fecha] )
 
     const handleForm = (e) => {
         e.preventDefault();
@@ -70,6 +91,7 @@ export default () => {
            setMessage(r.data)
             console.log(r.data)
             handleShow()
+
         }).catch((err)=>{console.log(err)})
         
     }   
@@ -78,6 +100,8 @@ export default () => {
 
     const handleClose = () => {setShow(false)} 
     const handleShow = () => {setShow(true)}
+    
+
 
     return (
         <AnimationRevealPage>
@@ -100,41 +124,43 @@ export default () => {
                     <FormContainer>
                         <div tw="mx-auto max-w-4xl">
                             <h2>Reserve su consulta</h2>
-                            <form action="#">
+                            
+                            <h4></h4>
+                            <form action="#" onSubmit={handleForm}>
                                 <TwoColumn>
                                     <Column>
                                         <InputContainer>
                                             <Label htmlFor="name-input">DNI</Label>
-                                            <Input id="name-input" type="text" name="name" placeholder="Ingrese su DNI" value={dni} onChange={(e) => { setDni(e.target.value) }} />
+                                            <Input required id="name-input" type="text" name="name" placeholder="Ingrese su DNI" value={dni} onChange={(e) => { setDni(e.target.value) }} />
                                         </InputContainer>
                                         <InputContainer>
                                             <Label htmlFor="email-input">CARACTER DE VALIDACIÓN</Label>
-                                            <Input id="email-input" type="email" name="email" placeholder="Ingrese el caracter" maxLength='1' value={digito} onChange={(e) => { setDigito(e.target.value) }} />
+                                            <Input required id="email-input" type="number" name="email" placeholder="Ingrese el caracter" maxLength='1' value={digito} onChange={(e) => { setDigito(e.target.value) }} />
                                         </InputContainer>
                                         <InputContainer>
-                                            <Label htmlFor="email-input">TELÉFONO</Label>
-                                            <Input id="email-input" type="email" name="email" placeholder="Ingrese su teléfono" value={telefono} onChange={(e) => { setTelefono(e.target.value) }} />
+                                            <Label htmlFor="email-input">EMAIL</Label>
+                                            <Input required id="email-input" type="email" name="email" placeholder="Ingrese su email" value={telefono} onChange={(e) => { setTelefono(e.target.value) }} />
                                         </InputContainer>
                                     </Column>
                                     <Column>
                                         <InputContainer>
                                             <Label htmlFor="name-input">ESPECIALIDAD</Label>
-                                            <Select className="select" value={especialidad}  onChange={(e)=>{setEspecialidad(e.target.value)}} style={{ width: '100%', color: 'rgba(160,174,192,1)', background: 'transparent', borderBottom: '2px solid #e5e7eb', paddingTop: '0.5rem', paddingBottom: '0.5rem' }} >
-                                                <Option value='descarte' className="option">Descarte COVID-19</Option>
+                                            <Select required className="select" value={especialidad}  onChange={(e)=>{setEspecialidad(e.target.value)}} style={{ width: '100%', color: 'rgba(160,174,192,1)', background: 'transparent', borderBottom: '2px solid #e5e7eb', paddingTop: '0.5rem', paddingBottom: '0.5rem' }} >
+                                                <Option  value='descarte' className="option">Descarte COVID-19</Option>
                                             </Select>
                                         </InputContainer>
                                         <InputContainer>
                                             <Label htmlFor="email-a">EDAD</Label>
-                                            <Input id="email-a" type="number" min="0" max="100" maxLength="2" name="email" value={edad} onChange={(e)=>{setEdad(e.target.value)}} />
+                                            <Input required id="email-a" type="number" min="0" max="100" maxLength="2" required name="email" value={edad} onChange={(e)=>{setEdad(e.target.value)}} />
                                         </InputContainer>
                                         <InputContainer>
                                     <Label htmlFor="email-b">DÍA DE LA CONSULTA</Label>
-                                    <Input id="email-b" type="date" name="email" placeholder="Ingrese el caracter" value={fecha} onChange={(e)=>{setFecha(e.target.value)}} />
+                                    <Input required id="email-b" type="date" name="email" placeholder="Ingrese el caracter" value={fecha} onChange={(e)=>{setFecha(e.target.value)}} />
                                 </InputContainer>
                                     </Column>
                                 </TwoColumn>
                                
-                                <SubmitButton type="submit" value="Submit" onClick={handleForm}>Enviar</SubmitButton>
+                                <SubmitButton type="submit" value="Submit"  >Enviar</SubmitButton>
                             </form>
                         </div>
                         <SvgDotPattern1 />
