@@ -6,8 +6,8 @@ import AnimationRevealPage from "helpers/AnimationRevealPage"
 import Navbar from "components/headers/light"
 import Footer from "components/footers/FiveColumnWithInputForm"
 import { ReactComponent as SvgDotPatternIcon } from "../../images/dot-pattern.svg"
-import {Modal, Button} from "react-bootstrap"
- 
+import { Modal, Button } from "react-bootstrap"
+
 const Container = tw.div`relative`;
 const Content = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
 
@@ -26,6 +26,10 @@ const FormContainer = styled.div`
 
     ::placeholder {
       ${tw`text-gray-500`}
+    }
+
+    :disabled{
+        ${tw`bg-red-500`}
     }
   }
 `;
@@ -53,27 +57,97 @@ export default () => {
     const [fecha, setFecha] = useState("")
     const [telefono, setTelefono] = useState("")
     const [msj, setMessage] = useState("")
-    const [cantidad, setCantidad] = useState("")
-    const [fetchCantidad, setFetchedCantidad] = useState(false)
+    const [disabled, setDisabled] = useState(false)
 
-    useEffect ( () => {
-        
+    useEffect(() => {
+
+        setDisabled(false)
+
         const data = {
             fecha: fecha
         }
 
-       Axios.post("https://backend-clinica2331.herokuapp.com/citaspordia", data).then((res)=>{
-           console.log(res.data)
-           
-           if(res.data===""){
-               console.log("está vacío")
-           } else {
-            setMessage("La cantidad de citas disponibles para esta fecha es " + res.data.citas_disponibles)
-            handleShow()
-           }
-           
-       }).catch((err)=>console.log(err  ))
-    } , [fecha] )
+
+
+        if (fecha !== "") {
+            console.log('fecha no está vacío')
+
+
+            const cita = {
+                año: fecha.slice(0, 4),
+                mes: fecha.slice(5, 7),
+                dia: fecha.slice(8, 10),
+            };
+
+            //fecha actual
+
+            const d = new Date();
+            const dia = ("0" + d.getDate()).slice(-2);
+            const mes = ("0" + (d.getMonth() + 1)).slice(-2);
+            const año = d.getFullYear();
+
+
+            if (cita.año >= año) {
+                if (cita.mes === mes) {
+                    if (cita.dia >= dia) {
+                        console.log("Puede registrarse")
+                        Axios.post("https://backend-clinica2331.herokuapp.com/citaspordia", data).then((res) => {
+                            console.log(res.data)
+
+                            if (res.data === "") {
+                                console.log("está vacío")
+                            } else {
+                                setMessage("La cantidad de citas disponibles para esta fecha es " + res.data.citas_disponibles)
+                                handleShow()
+                            }
+
+                        }).catch((err) => console.log(err))
+                    } else {
+                        setDisabled(true)
+
+                        setMessage("Mismo mes, pero día NO válido");
+                        handleShow()
+                    }
+                } else {
+                    if (cita.mes >= mes) {
+                        setDisabled(true)
+                        setMessage("Mes posterior");
+                        handleShow()
+                    } else {
+                        setDisabled(true)
+                        setMessage("Mes pasado, cita NO válida");
+                        handleShow()
+                    }
+                }
+            } else {
+                setDisabled(true)
+                setMessage('Año pasado, cita NO válida');
+                handleShow()
+            }
+
+        } else {
+            console.log("primer renderizado")
+        }
+
+        /*
+  const cita = {
+    año: diaF.slice(0, 4),
+    mes: diaF.slice(5, 7),
+    dia: diaF.slice(8, 10),
+  };
+
+  //fecha actual
+
+  const d = new Date();
+  const dia = ("0" + d.getDate()).slice(-2);
+  const mes = ("0" + (d.getMonth() + 1)).slice(-2);
+  const año = d.getFullYear();
+*/
+
+
+
+
+    }, [fecha])
 
     const handleForm = (e) => {
         e.preventDefault();
@@ -86,45 +160,45 @@ export default () => {
             fecha: fecha,
             telefono: telefono
         }
-        Axios.post('https://backend-clinica2331.herokuapp.com/registropacientes', data).then((r)=>{
+        Axios.post('https://backend-clinica2331.herokuapp.com/registropacientes', data).then((r) => {
             //console.log(data)
-           setMessage(r.data)
+            setMessage(r.data)
             console.log(r.data)
             handleShow()
 
-        }).catch((err)=>{console.log(err)})
-        
-    }   
+        }).catch((err) => { console.log(err) })
+
+    }
 
     const [show, setShow] = useState(false)
 
-    const handleClose = () => {setShow(false)} 
-    const handleShow = () => {setShow(true)}
-    
+    const handleClose = () => { setShow(false) }
+    const handleShow = () => { setShow(true) }
+
 
 
     return (
         <AnimationRevealPage>
             <Modal show={show} onHide={handleClose}>
-  <Modal.Header closeButton>
-    <Modal.Title>!Atención!</Modal.Title>
-  </Modal.Header>
+                <Modal.Header closeButton>
+                    <Modal.Title>!Atención!</Modal.Title>
+                </Modal.Header>
 
-  <Modal.Body>
-    <p>{msj}</p>
-  </Modal.Body>
+                <Modal.Body>
+                    <p>{msj}</p>
+                </Modal.Body>
 
-  <Modal.Footer>
-    <Button onClick={handleClose} variant="primary">Cerrar</Button>
-  </Modal.Footer>
-</Modal>
+                <Modal.Footer>
+                    <Button onClick={handleClose} variant="primary">Cerrar</Button>
+                </Modal.Footer>
+            </Modal>
             <Navbar />
             <Container>
                 <Content>
                     <FormContainer>
                         <div tw="mx-auto max-w-4xl">
                             <h2>Reserve su consulta</h2>
-                            
+
                             <h4></h4>
                             <form action="#" onSubmit={handleForm}>
                                 <TwoColumn>
@@ -145,22 +219,22 @@ export default () => {
                                     <Column>
                                         <InputContainer>
                                             <Label htmlFor="name-input">ESPECIALIDAD</Label>
-                                            <Select required className="select" value={especialidad}  onChange={(e)=>{setEspecialidad(e.target.value)}} style={{ width: '100%', color: 'rgba(160,174,192,1)', background: 'transparent', borderBottom: '2px solid #e5e7eb', paddingTop: '0.5rem', paddingBottom: '0.5rem' }} >
-                                                <Option  value='descarte' className="option">Descarte COVID-19</Option>
+                                            <Select required className="select" value={especialidad} onChange={(e) => { setEspecialidad(e.target.value) }} style={{ width: '100%', color: 'rgba(160,174,192,1)', background: 'transparent', borderBottom: '2px solid #e5e7eb', paddingTop: '0.5rem', paddingBottom: '0.5rem' }} >
+                                                <Option value='descarte' className="option">Descarte COVID-19</Option>
                                             </Select>
                                         </InputContainer>
                                         <InputContainer>
                                             <Label htmlFor="email-a">EDAD</Label>
-                                            <Input required id="email-a" type="number" min="0" max="100" maxLength="2" required name="email" value={edad} onChange={(e)=>{setEdad(e.target.value)}} />
+                                            <Input required id="email-a" type="number" min="0" max="100" maxLength="2" required name="email" value={edad} onChange={(e) => { setEdad(e.target.value) }} />
                                         </InputContainer>
                                         <InputContainer>
-                                    <Label htmlFor="email-b">DÍA DE LA CONSULTA</Label>
-                                    <Input required id="email-b" type="date" name="email" placeholder="Ingrese el caracter" value={fecha} onChange={(e)=>{setFecha(e.target.value)}} />
-                                </InputContainer>
+                                            <Label htmlFor="email-b">DÍA DE LA CONSULTA</Label>
+                                            <Input required id="email-b" type="date" name="email" placeholder="Ingrese el caracter" value={fecha} onChange={(e) => { setFecha(e.target.value) }} />
+                                        </InputContainer>
                                     </Column>
                                 </TwoColumn>
-                               
-                                <SubmitButton type="submit" value="Submit"  >Enviar</SubmitButton>
+
+                                <SubmitButton disabled={disabled} type="submit" value="Submit"  >Enviar</SubmitButton>
                             </form>
                         </div>
                         <SvgDotPattern1 />
