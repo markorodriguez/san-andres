@@ -53,7 +53,7 @@ export default () => {
     const [dni, setDni] = useState("")
     const [digito, setDigito] = useState("")
     const [especialidad, setEspecialidad] = useState("")
-    const [edad, setEdad] = useState("")
+    const [edad, setEdad] = useState(10)
     const [fecha, setFecha] = useState("")
     const [telefono, setTelefono] = useState("")
     const [msj, setMessage] = useState("")
@@ -148,6 +148,17 @@ export default () => {
 
 
     }, [fecha])
+
+    useEffect(()=>{
+        if(edad>=10 && edad <= 99){
+            console.log("Edad válida")
+        } else {
+            setEdad(10)
+            setDisabled(true)
+            setMessage("Ingrese una edad válida")
+            handleShow()
+        }
+    }, [edad])
 
     const handleForm = (e) => {
         e.preventDefault();
