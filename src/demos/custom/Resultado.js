@@ -43,8 +43,8 @@ const SvgDotPattern1 = tw(
 )`absolute bottom-0 right-0 transform translate-y-1/2 translate-x-1/2 -z-10 opacity-50 text-primary-500 fill-current w-24`;
 
 export default () => {
-  const [dni, setDni] = useState();
-  const [digito, setDigito] = useState();
+  const [dni, setDni] = useState("");
+  const [digito, setDigito] = useState("");
 
   const [show, setShow] = useState(false);
 
@@ -65,6 +65,7 @@ export default () => {
     };
     Axios.post("https://backend-clinica2331.herokuapp.com/verresultados", data)
       .then((res) => {
+        console.log(res.data)
         setMessage(res.data);
         handleShow()
       })
